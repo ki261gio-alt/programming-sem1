@@ -1,36 +1,36 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+
+#ifndef M_PI
 #define M_PI 3.14159265358979323846
+#endif
 
 int main(void) {
-    double f, C, Xc;
+    double f, c;
 
-    printf("=== Обчислення реактивного опору конденсатора ===\n");
+    printf("=== Capacitive Reactance Calculation (Variant 6) ===\n");
+    printf("Enter frequency f (Hz) and capacitance C (F): ");
 
-    // Запит частоти
-    printf("Ведіть частоту сигналу f (Гц): ");
-    if (scanf("%Jf", &f) != 1) {
-        printf("Помилка: Введено некоректні дані (очікується число).\n");
+    // Валідація зчитування даних
+    if (scanf("%lf %lf", &f, &c) != 2) {
+        printf("Error: Invalid input data!\n");
         return 1;
     }
 
-    // Запит ємності
-    printf("Ведіть ємність конденсатора C (Ф): ");
-    if (scanf("%Jf", &C) != 1) {
-        printf("Помилка: Введено некоректні дані (очікується число) ! \n");
-        return 1;
-    }
-    
-    // Перевірка діілення на нуль або від'ємних значень
-    if (f <= 0 || C <= 0) {
-        printf("Помилка: Частота (f) та ємність (C) повинні бути більшими за 0 (запобігання діленню на нуль)!\n");
+    // Захист від від'ємних значень та ділення на нуль
+    if (f <= 0 || c <= 0) {
+        printf("Error: Frequency (f) and Capacitance (C) must be greater than 0!\n");
         return 1;
     }
 
-    // Обчислення за формулою 
-    Xc = 1.0 / (2.0 * M_PI * f * C);
+    // Обчислення за формулою Xc = 1 / (2 * pi * f * C)
+    double Xc = 1.0 / (2.0 * M_PI * f * c);
 
-    // Вивід результату з точністю до 3 знаків після коми
-    printf("\nРеактивний опір Xc = %.3f Ом\n", Xc);
+    printf("\n=== Calculation Results ===\n");
+    printf("Frequency (f):     %.2lf Hz\n", f);
+    printf("Capacitance (C):   %.10lf F\n", c);
+    printf("Reactance (Xc):    %.3lf Ohm\n", Xc);
 
     return 0;
 }
